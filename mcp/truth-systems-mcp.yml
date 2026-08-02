@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.truthsystems.ai/mcp
+description: >-
+  Truth Systems operates a hosted, remote MCP server on its documentation site
+  (Mintlify-hosted, streamable HTTP). The server is read-only and scoped to the
+  Truth Systems Docs content: it exposes documentation search, a virtualized
+  read-only docs filesystem (including the Gateway OpenAPI spec), and a
+  documentation-feedback tool. Server info and tool list captured verbatim via
+  a live MCP initialize + tools/list handshake on 2026-07-21.
+server:
+  name: Truth Systems Docs
+  version: 1.0.0
+  transport: http
+  url: https://docs.truthsystems.ai/mcp
+  auth: none
+  protocol: streamable-http
+  capabilities:
+    tools: true
+    resources: true
+tools:
+  - name: search_truth_systems_docs
+    description: >-
+      Search across the Truth Systems Docs knowledge base to find relevant
+      information, code examples, API references, and guides. Returns
+      contextual content with titles and direct links to documentation pages.
+    read_only: true
+  - name: query_docs_filesystem_truth_systems_docs
+    description: >-
+      Run a read-only shell-like query (rg, grep, find, tree, ls, cat, head,
+      tail, jq, etc.) against a virtualized in-memory filesystem containing
+      only the Truth Systems documentation pages and OpenAPI specs.
+    read_only: true
+  - name: submit_feedback
+    description: >-
+      Report a problem with the documentation site (incorrect, outdated,
+      confusing, or incomplete pages) to the docs team.
+    read_only: false

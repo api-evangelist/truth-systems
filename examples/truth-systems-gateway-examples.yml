@@ -1,0 +1,58 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truth-systems-gateway-openapi-original.json
+description: >-
+  Request/response examples extracted verbatim from the Gateway OpenAPI
+  (requestBody and 200-response examples on POST /api/get_context_output),
+  plus the first-party code samples embedded in the spec's x-codeSamples.
+examples:
+  - operation: POST /api/get_context_output
+    request:
+      params:
+        claim: Sally is a cat
+        sources:
+          - id: '1'
+            text: Sally is my pet.
+          - id: '2'
+            text: My pets are all cats.
+    response:
+      detailed_responses:
+        - atomic: Sally is a cat
+          prediction: SUPPORTS
+          prediction_num: 2
+          prediction_vector: [0.79541015625, 0.0, 0.2042236328125]
+          span: [0, 14]
+      sentences:
+        - evidence:
+            ids: ['1']
+            scores: [[5.171875]]
+            source_spans: [[0, 16]]
+          span: [0, 14]
+          verdict: 2
+code_samples:
+  - lang: python
+    label: Python (truthsys SDK)
+    source: |
+      from truthsys import Client, TextSource
+
+      client = Client.from_url("YOUR_BASE_URL")
+      ruling = client.judge(
+          claim="Sally is a cat.",
+          sources=[
+              TextSource.from_text("Sally is my pet."),
+              TextSource.from_text("My pets are all cats."),
+          ],
+      )
+  - lang: bash
+    label: curl
+    source: |
+      curl --location 'http://BASE_URL/api/get_context_output' \
+      --data '{
+          "params": {
+              "claim": "Sally is a cat.",
+              "sources": [
+                  {"id": "1", "text": "Sally is my pet."},
+                  {"id": "2", "text": "My pets are all cats."}
+              ]
+          }
+      }'

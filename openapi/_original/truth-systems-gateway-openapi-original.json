@@ -1,0 +1,281 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gateway API",
+    "description": "The API specification for Gateway, an on-premise hallucination detector.",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/get_context_output": {
+      "post": {
+        "description": "Detects hallucinations in a claim.",
+        "parameters": [
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "An optional request ID to correlate server-side logs.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/gatewayInput"
+              },
+              "example": {
+                "params": {
+                  "claim": "Sally is a cat",
+                  "sources": [
+                    {
+                      "id": "1",
+                      "text": "Sally is my pet."
+                    },
+                    {
+                      "id": "2",
+                      "text": "My pets are all cats."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/gatewayOutput"
+                },
+                "example": {
+                  "detailed_responses": [
+                    {
+                      "atomic": "Sally is a cat",
+                      "prediction": "SUPPORTS",
+                      "prediction_num": 2,
+                      "prediction_vector": [
+                        0.79541015625, 0.0, 0.2042236328125
+                      ],
+                      "span": [0, 14],
+                      "top5_sentences": [
+                        ["Sally is my pet.", "My pets are all cats."],
+                        ["1", "2"],
+                        [[5.171875], [2.439453125]],
+                        [
+                          [0, 16],
+                          [0, 21]
+                        ]
+                      ]
+                    }
+                  ],
+                  "sentences": [
+                    {
+                      "evidence": {
+                        "ids": ["1"],
+                        "scores": [[5.171875]],
+                        "source_spans": [[0, 16]]
+                      },
+                      "span": [0, 14],
+                      "verdict": 2
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "python",
+            "label": "Python",
+            "source": "from truthsys import (\n    Client,  # or AsyncClient if you like\n    TextInfluence,\n    TextSource,\n    Verdict,\n)\n\n\nclient = Client.from_url(\"YOUR_BASE_URL\")  # or Client.from_httpx\n\nruling = client.judge(\n    claim=\"Sally is a cat.\",\n    sources=[\n        TextSource.from_text(\"Sally is my pet.\"),\n        TextSource.from_text(\"My pets are all cats.\"),\n    ],\n)"
+          },
+          {
+            "lang": "bash",
+            "label": "curl",
+            "source": "curl --location 'http://BASE_URL/api/get_context_output' \n--data '{\n    \"params\": {\n        \"claim\": \"Sally is a cat.\",\n        \"sources\": [\n            {\"id\": \"1\", \"text\": \"Sally is my pet.\"}, \n            {\"id\": \"2\", \"text\": \"My pets are all cats.\"}\n        ]\n    }\n}'"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "gatewayInput": {
+        "required": ["params"],
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "claim": {
+                "type": "string",
+                "description": "Desired claim to check"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "Text content of source"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "Id of source"
+                    }
+                  },
+                  "required": ["text", "id"]
+                }
+              }
+            },
+            "required": ["claim", "sources"]
+          }
+        }
+      },
+      "gatewayOutput": {
+        "type": "object",
+        "properties": {
+          "detailed_responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/detailed_response"
+            }
+          },
+          "sentences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/sentence"
+            }
+          }
+        }
+      },
+      "Error": {
+        "required": ["error", "message"],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "detailed_response": {
+        "required": ["atomic", "prediction", "prediction_num", "span"],
+        "type": "object",
+        "properties": {
+          "atomic": {
+            "type": "string",
+            "description": "Substatement made in claim."
+          },
+          "prediction": {
+            "type": "string",
+            "enum": ["REFUTES", "NOT ENOUGH INFO", "SUPPORTED"]
+          },
+          "prediction_num": {
+            "type": "integer",
+            "enum": [0, 1, 2]
+          },
+          "prediction_vector": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "prefixItems": [
+              {
+                "type": "integer",
+                "description": "Confidence score for the REFUTES classification"
+              },
+              {
+                "type": "integer",
+                "description": "Confidence score for the NOT ENOUGH INFO classification"
+              },
+              {
+                "type": "integer",
+                "description": "Confidence score for the SUPPORTED classification"
+              }
+            ],
+            "additionalItems": false
+          },
+          "span": {
+            "type": "array",
+            "description": "test",
+            "prefixItems": [
+              {
+                "type": "number",
+                "description": "Starting index of the claim's span"
+              },
+              {
+                "type": "number",
+                "description": "Ending index of the claim's span"
+              }
+            ],
+            "additionalItems": false
+          },
+          "top5_sentences": {
+            "$ref": "#/components/schemas/top5_sentences"
+          }
+        }
+      },
+      "top5_sentences": {
+        "type": "array"
+      },
+      "sentence": {
+        "type": "object",
+        "properties": {
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "scores": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "source_spans": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "span": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "verdict": {
+            "type": "integer",
+            "enum": [0, 1, 2]
+          }
+        }
+      }
+    }
+  }
+}

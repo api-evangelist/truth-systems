@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+docs: https://docs.truthsystems.ai/sdk/usage
+description: >-
+  Authentication profile for the Truth Systems Gateway API. Gateway deploys
+  into the customer's own cloud account (AWS or Azure), so authentication is
+  cloud-native rather than a hosted API key or OAuth surface. The published
+  OpenAPI declares no securitySchemes (the HTTP surface is reached inside the
+  customer deployment); auth is documented on the SDK usage page.
+summary:
+  types: [aws-iam, apiKey]
+  api_key_in: [query]
+  oauth2_flows: []
+schemes:
+  - name: aws-iam
+    type: aws-iam
+    description: >-
+      On AWS, the AwsClient invokes the Gateway Step Function with the caller's
+      AWS credentials (environment variables, IAM role, or ~/.aws/credentials).
+      Callers need IAM permissions states:StartExecution and
+      states:DescribeExecution on the deployed state machine.
+    docs: https://docs.truthsystems.ai/sdk/usage
+  - name: azure-function-key
+    type: apiKey
+    in: query
+    description: >-
+      On Azure, the AzureClient authenticates with the Function App's function
+      key passed at construction time (available as the Terraform output
+      function_app_default_key). No Azure AD roles are required - anyone with
+      the key can invoke Gateway.
+    docs: https://docs.truthsystems.ai/deployment/azure
+notes:
+  - The OpenAPI (openapi/truth-systems-gateway-openapi-original.json) defines
+    no securitySchemes; this profile is taken from the published docs.

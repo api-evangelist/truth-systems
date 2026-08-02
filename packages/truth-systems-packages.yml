@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: https://pypi.org/pypi/truthsys/json
+description: >-
+  First-party client libraries for the Truth Systems Gateway hallucination
+  detection API. The public truthsys package on PyPI is published by Truth
+  Systems (author Truth Systems <alex@truthsystems.ai>, homepage
+  truthsystems.ai, proprietary license). The current Gateway docs
+  (docs.truthsystems.ai/sdk/installation) state the newer "gateway" Python SDK
+  is distributed via SFTP during customer onboarding and is NOT published on
+  PyPI. No npm, Maven, NuGet, Go, RubyGems, Packagist, or crates.io packages
+  found (npm truthsys: 404).
+packages:
+  - language: python
+    registry: pypi
+    name: truthsys
+    url: https://pypi.org/project/truthsys/
+    install: pip install truthsys
+    version: 0.1.1
+    official: true
+    notes: >-
+      SDK for truthsystems.ai, a hallucination detection API. Client / AsyncClient
+      with judge(claim, sources) returning a Ruling (Verdict SUPPORTS / REFUTES /
+      NOT_ENOUGH_INFO). Matches the Python x-codeSamples in the Gateway OpenAPI.
+  - language: python
+    registry: sftp
+    name: gateway
+    url: https://docs.truthsystems.ai/sdk/installation
+    install: pip install gateway.whl  # wheel provided via SFTP during onboarding; extras [aws] / [azure]
+    official: true
+    notes: >-
+      The Gateway Python SDK documented at docs.truthsystems.ai (gateway.aws
+      AwsClient via Step Functions ARN, gateway.azure AzureClient via Function
+      App URL + key). Distributed via SFTP during onboarding, not on PyPI.

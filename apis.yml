@@ -1,8 +1,15 @@
 aid: truth-systems
 name: Truth Systems
-description: Truth Systems is a company surfaced as a portfolio company of lightspeed-venture-partners
-  and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the
-  enrichment pipeline.
+description: >-
+  Truth Systems builds AI governance and hallucination-detection infrastructure
+  for regulated industries, with a focus on legal firms. Gateway, its core API
+  product, fact-checks LLM-generated text against customer source documents in
+  real time - decomposing a claim into statements, retrieving evidence, and
+  returning SUPPORTS / REFUTES / NOT_ENOUGH_INFO verdicts with character-level
+  evidence spans. Gateway deploys into the customer's own AWS or Azure account
+  via Terraform, with a Python SDK. The company also offers Charter (AI
+  governance for human users) and Alexandria (agent-focused governance), and is
+  backed by Lightspeed Venture Partners.
 url: https://raw.githubusercontent.com/api-evangelist/truth-systems/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,14 +17,89 @@ x-backed-by:
 - lightspeed-venture-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://www.truthsystems.ai/truthsystems-logo.svg
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- AI Governance
+- Hallucination Detection
+- Fact Checking
+- Compliance
+- Legal
+apis:
+- aid: truth-systems:truth-systems-get-context-output-api
+  name: Truth Systems Get Context Output API
+  description: The Get Context Output API from Truth Systems — 1 operation(s) for get context output.
+  humanURL: https://docs.truthsystems.ai/introduction
+  baseURL: https://www.truthsystems.ai
+  tags:
+  - Get Context Output
+  properties:
+  - type: OpenAPI
+    url: openapi/truth-systems-get-context-output-api-openapi.yml
+  - type: Documentation
+    url: https://docs.truthsystems.ai/introduction
+  - type: APIReference
+    url: https://docs.truthsystems.ai/api-reference/openapi.json
+  - type: GettingStarted
+    url: https://docs.truthsystems.ai/sdk/installation
+  - type: Examples
+    url: examples/truth-systems-gateway-examples.yml
+common:
+- type: DomainSecurity
+  url: security/truth-systems-domain-security.yml
+- type: Website
+  url: https://www.truthsystems.ai
+- type: Portal
+  url: https://docs.truthsystems.ai
+- type: Documentation
+  url: https://docs.truthsystems.ai/introduction
+- type: GitHubOrganization
+  url: https://github.com/TruthSystems
+- type: Support
+  url: mailto:info@truthsystems.com
+- type: LLMsTxt
+  url: llms/truth-systems-llms.txt
+- type: MCPServer
+  url: mcp/truth-systems-mcp.yml
+- type: Packages
+  url: packages/truth-systems-packages.yml
+- type: SDKs
+  url: packages/truth-systems-packages.yml
+- type: Authentication
+  url: authentication/truth-systems-authentication.yml
+- type: Conventions
+  url: conventions/truth-systems-conventions.yml
+- type: ErrorCatalog
+  url: errors/truth-systems-problem-types.yml
+- type: Conformance
+  url: conformance/truth-systems-conformance.yml
+- type: DataModel
+  url: data-model/truth-systems-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

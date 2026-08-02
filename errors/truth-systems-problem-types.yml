@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truth-systems-gateway-openapi-original.json
+format: custom
+description: >-
+  Error surface derived from the Gateway OpenAPI and SDK docs. The spec
+  documents only a 200 response on POST /api/get_context_output but defines a
+  reusable Error schema; the SDK docs document a single APIError exception
+  class. Not RFC 9457 (no application/problem+json).
+envelope:
+  schema: '#/components/schemas/Error'
+  fields:
+    - name: error
+      type: integer
+      description: Numeric error code
+    - name: message
+      type: string
+      description: Human-readable error message
+problems: []
+sdk_errors:
+  - name: gateway.errors.APIError
+    description: >-
+      Raised by the Gateway Python SDK when a judge() call fails
+      (docs: https://docs.truthsystems.ai/sdk/usage#errors).
+notes:
+  - No 4xx/5xx responses are declared in the published OpenAPI; the Error
+    schema is defined but unreferenced by any documented response.

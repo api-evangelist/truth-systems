@@ -1,0 +1,49 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Probe of the /.well-known/ discovery surface and root discovery files on the
+  Truth Systems hosts. No well-known documents are published; the docs host
+  serves llms.txt, llms-full.txt (not committed - gitignored), robots.txt,
+  sitemap.xml, and a hosted MCP endpoint at /mcp. Statuses recorded verbatim
+  from HTTP probes on 2026-07-21. Absence is valid observed data.
+hosts:
+  - host: https://www.truthsystems.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+      - path: /security.txt
+        status: 404
+      - path: /robots.txt
+        status: 200
+      - path: /sitemap.xml
+        status: 404
+  - host: https://docs.truthsystems.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /llms.txt
+        status: 200
+        file: ../llms/truth-systems-llms.txt
+      - path: /llms-full.txt
+        status: 200
+        note: not committed (*-llms-full.txt gitignored per pipeline contract)
+      - path: /robots.txt
+        status: 200
+      - path: /sitemap.xml
+        status: 200
+      - path: /mcp
+        status: 200
+        note: hosted MCP server (see mcp/truth-systems-mcp.yml)
+      - path: /api-reference/openapi.json
+        status: 200
+        file: ../openapi/truth-systems-gateway-openapi-original.json

@@ -1,0 +1,8 @@
+generated: '2026-07-21'
+method: generated
+skills:
+  - file: truth-systems-fact-check-claim.md
+    name: Fact-check a claim against source documents with Gateway
+    api: openapi/truth-systems-gateway-openapi-original.json
+    operations:
+      - POST /api/get_context_output

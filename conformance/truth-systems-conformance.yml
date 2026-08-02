@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truth-systems-gateway-openapi-original.json
+description: >-
+  Cross-cutting standards assertions for the Truth Systems Gateway API,
+  derived from the published OpenAPI and docs. Gateway is a single-operation,
+  on-premise hallucination-detection API; most industry standards do not
+  apply. No published compliance program (SOC 2 / ISO 27001) was found - the
+  website /security page returns 404 server-side and no trust center exists.
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: Published spec at docs.truthsystems.ai/api-reference/openapi.json declares openapi 3.1.0
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securitySchemes; auth is AWS IAM / Azure Function key
+  - id: oidc
+    conforms: false
+    evidence: No openIdConnect scheme; /.well-known/openid-configuration returns 404
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Error schema is a custom {error, message} envelope, not application/problem+json
+  - id: request-id-tracing
+    conforms: true
+    evidence: Optional X-Request-ID header on POST /api/get_context_output for log correlation
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency key contract documented
+  - id: pagination
+    conforms: false
+    evidence: Single RPC-style operation; no list endpoints
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on www and docs hosts

@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.truthsystems.ai/sdk/usage
+description: >-
+  Cross-cutting request/response semantics for the Truth Systems Gateway API,
+  from the published docs and the Gateway OpenAPI. Gateway is an on-premise /
+  BYOC product (deployed to the customer's AWS or Azure account), which shapes
+  most conventions: cloud-native auth, async execution with SDK-side polling,
+  and no public rate-limit or idempotency contract.
+authentication:
+  style: cloud-native
+  detail: AWS IAM (Step Functions StartExecution/DescribeExecution) or Azure Function key
+  artifact: authentication/truth-systems-authentication.yml
+idempotency:
+  supported: false
+  notes: No idempotency key or replay contract is documented.
+pagination:
+  style: none
+  notes: Single judge operation; no list endpoints or pagination surface.
+request_tracing:
+  header: X-Request-ID
+  direction: request
+  notes: >-
+    Optional request header on POST /api/get_context_output to correlate
+    server-side logs (declared in the OpenAPI).
+async_execution:
+  pattern: polling
+  notes: >-
+    The SDK judge() call sends the claim and sources, polls the deployment
+    (AWS Step Function execution / Azure Durable Functions) until completion,
+    and returns a Ruling object.
+versioning:
+  scheme: none-published
+  spec_version: 1.0.0
+  notes: No versioning or deprecation policy is published; OpenAPI info.version 1.0.0.
+error_envelope:
+  shape: '{ error: integer, message: string }'
+  format: custom
+  artifact: errors/truth-systems-problem-types.yml
+  notes: SDK raises gateway.errors.APIError / truthsys errors.
+rate_limits:
+  signaling: none-published
+  notes: >-
+    No rate-limit headers or quotas documented; capacity is a function of the
+    customer's own cloud deployment (Bedrock / AI Foundry model throughput).

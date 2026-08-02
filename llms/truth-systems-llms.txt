@@ -1,0 +1,14 @@
+# Truth Systems Docs
+
+## Docs
+
+- [Deploy on AWS](https://docs.truthsystems.ai/deployment/aws.md): Deploy Gateway to your AWS account.
+- [Deploy on Azure](https://docs.truthsystems.ai/deployment/azure.md): Deploy Gateway to your Azure account.
+- [Introduction to Gateway](https://docs.truthsystems.ai/introduction.md): Real-time hallucination detection for LLM outputs.
+- [Installation](https://docs.truthsystems.ai/sdk/installation.md): Install the Gateway Python SDK.
+- [The Ruling object](https://docs.truthsystems.ai/sdk/ruling.md): Understanding Gateway's output.
+- [Usage](https://docs.truthsystems.ai/sdk/usage.md): Fact-check claims against sources.
+
+## OpenAPI Specs
+
+- [openapi](https://docs.truthsystems.ai/api-reference/openapi.json)

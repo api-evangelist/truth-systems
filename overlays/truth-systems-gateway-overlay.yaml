@@ -1,0 +1,35 @@
+# generated: '2026-07-21'
+# method: generated
+# source: API Evangelist enrichment pipeline (local pass)
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Truth Systems Gateway API
+  version: 1.0.0
+extends: openapi/truth-systems-gateway-openapi-original.json
+actions:
+  - target: $.info
+    description: Add provider identity and catalog context
+    update:
+      contact:
+        name: Truth Systems
+        url: https://www.truthsystems.ai
+        email: info@truthsystems.com
+      x-apievangelist:
+        slug: truth-systems
+        deployment-model: on-premise
+        note: >-
+          Gateway deploys into the customer's own AWS or Azure account; the
+          base URL is deployment-specific (Step Function ARN on AWS, Function
+          App URL on Azure). SDK and Terraform modules are delivered via SFTP
+          during onboarding.
+  - target: $.paths['/api/get_context_output'].post
+    description: Add missing operationId, summary, and tags for tooling
+    update:
+      operationId: getContextOutput
+      summary: Detect hallucinations in a claim against provided sources
+      tags:
+        - Hallucination Detection
+  - target: $.paths['/api/get_context_output'].post
+    description: Document the error envelope the spec defines but never references
+    update:
+      x-error-envelope: '#/components/schemas/Error'
