@@ -1,0 +1,136 @@
+{
+  "item": [
+    {
+      "id": "7c0702ba-1a14-4128-9777-e388bc3358f6",
+      "name": "Get Context Output",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6379ccb6-7332-43d1-9650-fd6bef299d8f",
+          "name": "Detects hallucinations in a claim.",
+          "request": {
+            "name": "Detects hallucinations in a claim.",
+            "description": {
+              "content": "Detects hallucinations in a claim.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "get_context_output"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "An optional request ID to correlate server-side logs.",
+                "key": "X-Request-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"claim\": \"<string>\",\n    \"sources\": [\n      {\n        \"text\": \"<string>\",\n        \"id\": \"<string>\"\n      },\n      {\n        \"text\": \"<string>\",\n        \"id\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2068665f-7b68-4d75-bdd8-50a550c317f5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "get_context_output"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "An optional request ID to correlate server-side logs.",
+                    "key": "X-Request-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {\n    \"claim\": \"Sally is a cat\",\n    \"sources\": [\n      {\n        \"id\": \"1\",\n        \"text\": \"Sally is my pet.\"\n      },\n      {\n        \"id\": \"2\",\n        \"text\": \"My pets are all cats.\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detailed_responses\": [\n    {\n      \"atomic\": \"Sally is a cat\",\n      \"prediction\": \"SUPPORTS\",\n      \"prediction_num\": 2,\n      \"prediction_vector\": [\n        0.79541015625,\n        0,\n        0.2042236328125\n      ],\n      \"span\": [\n        0,\n        14\n      ],\n      \"top5_sentences\": [\n        [\n          \"Sally is my pet.\",\n          \"My pets are all cats.\"\n        ],\n        [\n          \"1\",\n          \"2\"\n        ],\n        [\n          [\n            5.171875\n          ],\n          [\n            2.439453125\n          ]\n        ],\n        [\n          [\n            0,\n            16\n          ],\n          [\n            0,\n            21\n          ]\n        ]\n      ]\n    }\n  ],\n  \"sentences\": [\n    {\n      \"evidence\": {\n        \"ids\": [\n          \"1\"\n        ],\n        \"scores\": [\n          [\n            5.171875\n          ]\n        ],\n        \"source_spans\": [\n          [\n            0,\n            16\n          ]\n        ]\n      },\n      \"span\": [\n        0,\n        14\n      ],\n      \"verdict\": 2\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "27643a87-d3ef-4136-b835-393297dfb929",
+    "name": "Gateway Get Context Output API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API specification for Gateway, an on-premise hallucination detector.",
+      "type": "text/plain"
+    }
+  }
+}
