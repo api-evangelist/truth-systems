@@ -1,7 +1,7 @@
 {
   "provider": "truth-systems",
   "sources": [
-    "truth-systems-get-context-output-api-openapi.yml"
+    "_original/truth-systems-gateway-openapi-original.json"
   ],
   "outputs": [
     "truth-systems-get-context-output-api-openapi.yml"
@@ -9,6 +9,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "truth-systems-gateway-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "truth-systems-gateway-openapi-original.json: tagged paths POST /api/get_context_output -> Get Context Output",
+    "truth-systems-gateway-openapi-original.json: declared missing tag: Get Context Output",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "truth-systems-get-context-output-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Gateway Get Context Output API
   description: The API specification for Gateway, an on-premise hallucination detector.
@@ -84,38 +84,23 @@ paths:
         source: "curl --location 'http://BASE_URL/api/get_context_output' \n--data '{\n    \"params\": {\n        \"claim\": \"Sally is a cat.\",\n        \"sources\": [\n            {\"id\": \"1\", \"text\": \"Sally is my pet.\"}, \n            {\"id\": \"2\", \"text\": \"My pets are all cats.\"}\n        ]\n    }\n}'"
       tags:
       - Get Context Output
+      summary: Create api get context output
+      x-summary-source: derived
+      operationId: postApiGetContextOutput
+      x-operation-id-source: derived
 components:
   schemas:
-    top5_sentences:
-      type: array
-    gatewayInput:
-      required:
-      - params
+    gatewayOutput:
       type: object
       properties:
-        params:
-          type: object
-          properties:
-            claim:
-              type: string
-              description: Desired claim to check
-            sources:
-              type: array
-              items:
-                type: object
-                properties:
-                  text:
-                    type: string
-                    description: Text content of source
-                  id:
-                    type: string
-                    description: Id of source
-                required:
-                - text
-                - id
-          required:
-          - claim
-          - sources
+        detailed_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/detailed_response'
+        sentences:
+          type: array
+          items:
+            $ref: '#/components/schemas/sentence'
     sentence:
       type: object
       properties:
@@ -148,17 +133,8 @@ components:
           - 0
           - 1
           - 2
-    gatewayOutput:
-      type: object
-      properties:
-        detailed_responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/detailed_response'
-        sentences:
-          type: array
-          items:
-            $ref: '#/components/schemas/sentence'
+    top5_sentences:
+      type: array
     detailed_response:
       required:
       - atomic
@@ -205,3 +181,31 @@ components:
           additionalItems: false
         top5_sentences:
           $ref: '#/components/schemas/top5_sentences'
+    gatewayInput:
+      required:
+      - params
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            claim:
+              type: string
+              description: Desired claim to check
+            sources:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: Text content of source
+                  id:
+                    type: string
+                    description: Id of source
+                required:
+                - text
+                - id
+          required:
+          - claim
+          - sources
