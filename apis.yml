@@ -58,7 +58,6 @@ apis:
   name: Truth Systems Get Context Output API
   description: The Get Context Output API from Truth Systems — 1 operation(s) for get context output.
   humanURL: https://docs.truthsystems.ai/introduction
-  baseURL: https://www.truthsystems.ai
   tags:
   - Get Context Output
   properties:

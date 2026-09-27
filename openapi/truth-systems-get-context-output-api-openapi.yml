@@ -90,51 +90,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    gatewayOutput:
-      type: object
-      properties:
-        detailed_responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/detailed_response'
-        sentences:
-          type: array
-          items:
-            $ref: '#/components/schemas/sentence'
-    sentence:
-      type: object
-      properties:
-        evidence:
-          type: object
-          properties:
-            ids:
-              type: array
-              items:
-                type: string
-            scores:
-              type: array
-              items:
-                type: array
-                items:
-                  type: number
-            source_spans:
-              type: array
-              items:
-                type: array
-                items:
-                  type: number
-        span:
-          type: array
-          items:
-            type: integer
-        verdict:
-          type: integer
-          enum:
-          - 0
-          - 1
-          - 2
-    top5_sentences:
-      type: array
     detailed_response:
       required:
       - atomic
@@ -181,6 +136,40 @@ components:
           additionalItems: false
         top5_sentences:
           $ref: '#/components/schemas/top5_sentences'
+    sentence:
+      type: object
+      properties:
+        evidence:
+          type: object
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+            scores:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+            source_spans:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+        span:
+          type: array
+          items:
+            type: integer
+        verdict:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+    top5_sentences:
+      type: array
     gatewayInput:
       required:
       - params
@@ -209,3 +198,14 @@ components:
           required:
           - claim
           - sources
+    gatewayOutput:
+      type: object
+      properties:
+        detailed_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/detailed_response'
+        sentences:
+          type: array
+          items:
+            $ref: '#/components/schemas/sentence'
