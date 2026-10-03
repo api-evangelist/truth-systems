@@ -90,6 +90,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    gatewayOutput:
+      type: object
+      properties:
+        detailed_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/detailed_response'
+        sentences:
+          type: array
+          items:
+            $ref: '#/components/schemas/sentence'
     detailed_response:
       required:
       - atomic
@@ -168,8 +179,6 @@ components:
           - 0
           - 1
           - 2
-    top5_sentences:
-      type: array
     gatewayInput:
       required:
       - params
@@ -198,14 +207,5 @@ components:
           required:
           - claim
           - sources
-    gatewayOutput:
-      type: object
-      properties:
-        detailed_responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/detailed_response'
-        sentences:
-          type: array
-          items:
-            $ref: '#/components/schemas/sentence'
+    top5_sentences:
+      type: array
