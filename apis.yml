@@ -72,6 +72,9 @@ apis:
   - type: Examples
     url: examples/truth-systems-gateway-examples.yml
 common:
+- type: CapabilityMap
+  url: capabilities/truth-systems-capability-edges.yml
+  name: Truth Systems Business Capability Map
 - type: Overlay
   url: overlays/truth-systems-gateway-overlay.yaml
 - type: DomainSecurity
