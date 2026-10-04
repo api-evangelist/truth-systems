@@ -90,6 +90,40 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    top5_sentences:
+      type: array
+    sentence:
+      type: object
+      properties:
+        evidence:
+          type: object
+          properties:
+            ids:
+              type: array
+              items:
+                type: string
+            scores:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+            source_spans:
+              type: array
+              items:
+                type: array
+                items:
+                  type: number
+        span:
+          type: array
+          items:
+            type: integer
+        verdict:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
     gatewayOutput:
       type: object
       properties:
@@ -101,6 +135,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/sentence'
+    gatewayInput:
+      required:
+      - params
+      type: object
+      properties:
+        params:
+          type: object
+          properties:
+            claim:
+              type: string
+              description: Desired claim to check
+            sources:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    description: Text content of source
+                  id:
+                    type: string
+                    description: Id of source
+                required:
+                - text
+                - id
+          required:
+          - claim
+          - sources
     detailed_response:
       required:
       - atomic
@@ -147,65 +209,3 @@ components:
           additionalItems: false
         top5_sentences:
           $ref: '#/components/schemas/top5_sentences'
-    sentence:
-      type: object
-      properties:
-        evidence:
-          type: object
-          properties:
-            ids:
-              type: array
-              items:
-                type: string
-            scores:
-              type: array
-              items:
-                type: array
-                items:
-                  type: number
-            source_spans:
-              type: array
-              items:
-                type: array
-                items:
-                  type: number
-        span:
-          type: array
-          items:
-            type: integer
-        verdict:
-          type: integer
-          enum:
-          - 0
-          - 1
-          - 2
-    gatewayInput:
-      required:
-      - params
-      type: object
-      properties:
-        params:
-          type: object
-          properties:
-            claim:
-              type: string
-              description: Desired claim to check
-            sources:
-              type: array
-              items:
-                type: object
-                properties:
-                  text:
-                    type: string
-                    description: Text content of source
-                  id:
-                    type: string
-                    description: Id of source
-                required:
-                - text
-                - id
-          required:
-          - claim
-          - sources
-    top5_sentences:
-      type: array
